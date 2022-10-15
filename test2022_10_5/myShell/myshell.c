@@ -64,6 +64,22 @@
 char command_line[NUM];
 char *command_args[SIZE];
 
+extern char **environ;
+char env_buffer[NUM];
+
+
+//对应上层的内建命令
+int ChangeDir(const char* new_path)
+{
+    chdir(new_path);
+    return 0; //调用成功
+}
+
+void PutEnvInMyShell(char* new_env)
+{
+    putenv(new_env);
+}
+
 int main()
 {
     //shell 本质上就是一个死循环
@@ -80,6 +96,11 @@ int main()
         //3. "ls -a -l -i" -> "ls" "-a" "-l" "-i" 字符串切分
         command_args[0] = strtok(command_line, SEP);
         int index = 1;
+
+        //给ls命令添加颜色
+        if(strcmp(command_args[0], "ls") == 0)
+            command_args[index++] =(char*) "--color=auto";
+
         // = 是故意这么写的
         // strtok 截取成功，返回字符串其实地址
         // 截取失败，返回NULL
@@ -91,6 +112,28 @@ int main()
         //    printf("%d : %s\n", i, command_args[i]);
         //}
         // 4. TODO, 编写后面的逻辑, 内建命令
+        
+
+        if(strcmp(command_args[0], "cd") == 0)
+        {
+            ChangeDir(command_args[1]); //让调用方进行路径切换，即父进程
+            continue;
+        }
+        
+
+
+        if(strcmp(command_args[0], "cd") == 0)
+        {
+            //目前环境变量信息在command_line, 会被清空
+            //需要自己保存
+            strcpy(env_buffer, command_args[1]);
+            PutEnvInMyShell(env_buffer);
+            continue;
+        }
+
+
+
+        //
         // 5. 创建进程,执行
         pid_t id = fork();
         if(id == 0)
