@@ -215,15 +215,15 @@ int main()
                 case NONE_REDIR:
                     break;
                 case INPUT_REDIR:
-                    fd = open(g_redir_filename, O_RDONLY);
+                    fd = open(g_redir_filename, O_RDONLY, 0666);
                     dup2(fd, 0);
                     break;
                 case OUTPUT_REDIR:
-                    fd = open(g_redir_filename, O_WRONLY | O_CREAT | O_TRUNC);
+                    fd = open(g_redir_filename, O_WRONLY | O_CREAT | O_TRUNC, 0666);
                     dup2(fd, 1);
                     break;
                 case APPEND_REDIR:
-                    fd = open(g_redir_filename, O_WRONLY | O_CREAT | O_APPEND);
+                    fd = open(g_redir_filename, O_WRONLY | O_CREAT | O_APPEND, 0666);
                     dup2(fd, 1);
                     break;
 
