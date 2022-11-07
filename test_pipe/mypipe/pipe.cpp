@@ -95,6 +95,7 @@ void sendTask(const vector<elem>& processFds)
 }
 
 //父进程控制多个子进程
+/*
 int main()
 {
     loadFunctor();
@@ -141,10 +142,10 @@ int main()
         }
     }
 
-}
+}*/
 
 //演示管道通信的过程————匿名管道
-/*int main()
+int main()
 {
 
     //创建匿名管道
@@ -219,4 +220,3 @@ int main()
     }
 
 }
-*/
