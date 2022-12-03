@@ -1,0 +1,16 @@
+DEBUG | 1670055189 | lhf | accept: Success | 127.0.0.1[52354], socket fd: 7
+DEBUG | 1670055189 | lhf | 线程ID[0x7f13ef227700]处理127.0.0.1:52354的请求开始了...
+DEBUG | 1670055194 | lhf | [127.0.0.1:52354] exec [ls]
+DEBUG | 1670055194 | lhf | [127.0.0.1:52354] exec [ls] ... done
+DEBUG | 1670055266 | lhf | client quit -- 127.0.0.1[52354]
+DEBUG | 1670055266 | lhf | server close 7 done
+DEBUG | 1670055269 | lhf | accept: Success | 127.0.0.1[37154], socket fd: 7
+DEBUG | 1670055269 | lhf | 线程ID[0x7fa098444700]处理127.0.0.1:37154的请求开始了...
+DEBUG | 1670055293 | lhf | client quit -- 127.0.0.1[37154]
+DEBUG | 1670055293 | lhf | server close 7 done
+DEBUG | 1670055430 | lhf | accept: Success | 127.0.0.1[52378], socket fd: 7
+DEBUG | 1670055430 | lhf | 线程ID[0x7fea39a2a700]处理127.0.0.1:52378的请求开始了...
+DEBUG | 1670055460 | lhf | [127.0.0.1:52378] exec [ls]
+DEBUG | 1670055460 | lhf | [127.0.0.1:52378] exec [ls] ... done
+DEBUG | 1670055473 | lhf | client quit -- 127.0.0.1[52378]
+DEBUG | 1670055473 | lhf | server close 7 done

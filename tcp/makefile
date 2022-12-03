@@ -1,12 +1,12 @@
 .PHONY:all
-all:clientTcp serverTcp
+all:clientTcp serverTcpd
 
 clientTcp:ClientTcp.cpp
 	g++ -o $@ $^ -std=c++11
 
-serverTcp:ServerTcp.cpp
+serverTcpd:ServerTcp.cpp
 	g++ -o $@ $^ -std=c++11 -lpthread
 
 .PHONY:clean
 clean:
-	rm -f clientTcp serverTcp
+	rm -f clientTcp serverTcpd
