@@ -1,11 +1,12 @@
 .PHONY:all
 all:clientTcp serverTcpd
+Method=#-DMY_PROTOCOL
 
 clientTcp:ClientTcp.cpp
-	g++ -o $@ $^ -std=c++11
+	g++ -o $@ $^ $(Method) -std=c++11 -ljsoncpp
 
 serverTcpd:ServerTcp.cpp
-	g++ -o $@ $^ -std=c++11 -lpthread
+	g++ -o $@ $^ $(Method) -std=c++11 -ljsoncpp -lpthread
 
 .PHONY:clean
 clean:

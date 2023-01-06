@@ -13,7 +13,7 @@
 
 #define OPS "+-*/%"
 
-#define MY_PROTOCOL
+// #define MY_PROTOCOL
 
 // decode，整个序列化之后的字符串进行提取长度
 // 1. 必须具有完整的长度
@@ -74,6 +74,7 @@ public:
     // 序列化 -- 结构化的数据 -> 字符串
     void serialize(std::string *out)
     {
+#ifdef MY_PROTOCOL
         std::string xstr = std::to_string(_x);
         std::string ystr = std::to_string(_y);
 
@@ -82,10 +83,27 @@ public:
         *out += _op;
         *out += SPACE;
         *out += ystr;
+#else   
+
+        //json
+        //1. Value对象：万能对象
+        //2. json基于kv模型
+        //3. json有两套操作方法
+        //4. 序列化时，会将所有的数据内容转化为字符串
+        Json::Value root;
+        root["x"] = _x;
+        root["y"] = _y;
+        root["op"] = _op;
+
+        Json::FastWriter fw;
+        *out = fw.write(root);
+
+#endif
     }
     // 反序列化 -- 字符串 -> 结构化的数据
     bool deserialize(std::string &in)
     {
+#ifdef MY_PROTOCOL
         // 100 + 200
         std::size_t space_first = in.find(SPACE);
         if (space_first == std::string::npos)
@@ -106,6 +124,20 @@ public:
         _y = atoi(data_second.c_str());
         _op = oper[0];
         return true;
+#else
+
+        //json
+        Json::Value root;
+        Json::Reader reader;
+        reader.parse(in, root);
+
+        _x = root["x"].asInt();
+        _y = root["y"].asInt();
+        _op = root["op"].asInt();
+        
+        return true;
+
+#endif
     }
 
     void debug()
@@ -133,6 +165,7 @@ public:
     // 序列化
     void serialize(std::string *out)
     {
+#ifdef MY_PROTOCOL
         //"_exitCode _result"
         std::string ec = std::to_string(_exitCode);
         std::string res = std::to_string(_result);
@@ -140,11 +173,25 @@ public:
         *out = ec;
         *out += SPACE;
         *out += res;
+#else
+
+        //json
+        Json::Value root;
+        root["exitcode"] = _exitCode;
+        root["result"] = _result;
+
+        // Json::FastWriter fw;
+        // *out = fw.write(root);
+        Json::StyledWriter sw;
+        *out = sw.write(root);
+
+#endif
     }
     // 反序列化
     bool deserialize(std::string &in)
     {
         // "0 100"
+#ifdef MY_PROTOCOL
         std::size_t pos = in.find(SPACE);
         if (pos == std::string::npos)
             return false;
@@ -156,6 +203,17 @@ public:
         _result = atoi(resultstr.c_str());
 
         return true;
+#else
+
+    Json::Value root;
+    Json::Reader reader;
+    reader.parse(in, root);
+    _exitCode = root["exitcode"].asInt();
+    _result = root["result"].asInt();
+
+    return true;
+
+#endif
     }
 
     void debug()
